@@ -13,3 +13,8 @@ function render($path, $template = false, $data = [])
 		require "views/$path.php";
 	}
 }
+function component($name, $data = [])
+{
+  extract($data);
+  include "templates/$name.php";
+}

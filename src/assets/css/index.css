@@ -1,0 +1,10 @@
+.event {
+  width: 800px;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  background-color: pink;
+}
+.event div {
+  display: flex;
+}
