@@ -1,35 +1,43 @@
 <?php
 
+
 $error = [];
+$event = new Models\Event();
+$events = $event->getAllEvent();
+$info = $event->info(1);
+var_dump($info);
 
-if (!empty($_POST)) {
-	// $user = new Models\User();
+// if (!empty($_POST)) {
 
-	// try {
-	// 	$user->setUsername($_POST['name']);
-	// } catch (\Exception $e) {
-	// 	$error['name'] = $e->getMessage();
-	// }
-	// try {
-	// 	$user->setEmail($_POST['email']);
-	// } catch (\Exception $e) {
-	// 	$error['email'] = $e->getMessage();
-	// }
-	// try {
-	// 	$user->setPassword($_POST['password']);
-	// } catch (\Exception $e) {
-	// 	$error['password'] = $e->getMessage();
-	// }
+// $user = new Models\User();
 
-	// if (empty($error)) {
-	// 	if ($user->register()) {
-	// 		redirectTo('/');
-	// 	} else {
-	// 		$error['global'] = 'Echec de l\'enregistrement';
-	// 	}
-	// }
-}
+// try {
+// 	$user->setUsername($_POST['name']);
+// } catch (\Exception $e) {
+// 	$error['name'] = $e->getMessage();
+// }
+// try {
+// 	$user->setEmail($_POST['email']);
+// } catch (\Exception $e) {
+// 	$error['email'] = $e->getMessage();
+// }
+// try {
+// 	$user->setPassword($_POST['password']);
+// } catch (\Exception $e) {
+// 	$error['password'] = $e->getMessage();
+// }
+
+// if (empty($error)) {
+// 	if ($user->register()) {
+// 		redirectTo('/');
+// 	} else {
+// 		$error['global'] = 'Echec de l\'enregistrement';
+// 	}
+// }
+// }
 
 render('index', false, [
 	'error' => $error,
+	'events' => $events,
+	'info' => $info
 ]);

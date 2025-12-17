@@ -1,0 +1,10 @@
+<div class="spent-card" <?= $spent["status"] === "done" ? "spent-done" : "" ?>>
+    <div class="spent-content">
+        <h3 class="spent">
+            <?= htmlspecialchars($spent['name_spent']) ?>
+        </h3>
+        <p>Paye par <?= $nameAutor['name'] ?></p>
+        <p class="spent"> <?= htmlspecialchars($spent['spent']) ?> €</p>
+
+    </div>
+</div>
