@@ -1,13 +1,6 @@
 <?php ob_start() ?>
 
 <h1><?php  ?> Vos Evènements</h1>
-<?php if (!empty($success)): ?>
-    <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
-<?php endif; ?>
-
-<?php if (!empty($error["action"])): ?>
-    <div class="alert alert-error"><?= htmlspecialchars($error["action"]) ?></div>
-<?php endif; ?>
 
 <button id="addSpent"> Create a new spent</button>
 <!-- Formulaire d'ajout -->
@@ -47,7 +40,7 @@
 <div id="spentList">
     <h2 class="title">Mes depenses</h2>
     <?php if (empty($spents)): ?>
-        <p class="no-spents">Aucune depense pour le moment. Ajoutez-en une !</p>
+        <p class="no-spents">Aucune dépense pour le moment.Ajoutez-en une!</p>
     <?php else: ?>
         <?php foreach ($spents as $spent): ?>
             <?php component("spent-card", [
@@ -62,8 +55,8 @@
 <?php
 render('default', true, [
     'title' => 'Events',
-    'css' => 'index',
-    'js' => 'form',
+    'css' => 'global',
+    'js' => 'formSpent',
     'content' => ob_get_clean(),
 ]);
 ?>

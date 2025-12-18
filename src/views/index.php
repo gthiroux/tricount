@@ -1,29 +1,45 @@
 <?php ob_start();
 
-session_start(); 
+session_start();
 
 ?>
 
-<h1>Event</h1>
-<form action="" method='post'>
-	<input type="text" placeholder="Ajouter une nouvelle tâche" name="name" />
-
-	<button id="newEvent" type="submit">Valider</button>
-</form>
-
-<div id="eventList">
-	<a href="event">
-		<div class="event">
-			<div>
-				<img src="" alt="image">
-				<p>Name</p>
-			</div>
-			<div> picto</div>
+<h1>Events</h1>
+<button id="addEvent"> Créer un nouveau évènement</button>
+<!-- Formulaire d'ajout -->
+<div id="popupFormEvent" class="formCard modal">
+	<!-- Contenu de la pop up -->
+	<div class="modalContent">
+		<div class="headerCard">
+			<h2>Ajouter un évènement </h2>
+			<span class="close">&times;</span>
 		</div>
-	</a>
+		<form method="POST" action="" name="addEventForm">
+			<div class="formGroup">
+				<label for="nameEvent">Nom de la dépense : </label>
+				<input
+					type="text"
+					id="nameEvent"
+					name="nameEvent"
+					placeholder="Entrez le titre de l'évènement">
+				<?php if (!empty($error["nameEvent"])): ?>
+					<span class="error"><?= htmlspecialchars($error["nameEvent"]) ?></span>
+				<?php endif; ?>
+			</div>
+
+			<div class="form-group">
+				<label for="participant">Nombre de participant </label>
+				<input id="participant" name="participant" type="number" placeholder="Entrez un montant"></input>
+				<?php if (!empty($error["totalSpent"])): ?>
+					<span class="error"><?= htmlspecialchars($error["totalSpent"]) ?></span>
+				<?php endif; ?>
+			</div>
+
+			<button type="submit" name="addEvent" class="btn btn-primary">Ajouter la dépense</button>
+		</form>
+	</div>
 </div>
 
-<button> <a href="#">Create a new event</a></button>
 <div id="eventList">
 	<h2 class="title">
 		Mes Evènements
@@ -43,8 +59,8 @@ session_start();
 <?php
 render('default', true, [
 	'title' => 'Acceuil',
-	'css' => 'index',
-	// 'js' => 'event',
+	'css' => 'global',
+	'js' => 'formEvent',
 	'content' => ob_get_clean(),
 ]);
 ?>

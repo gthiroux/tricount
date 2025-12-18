@@ -1,0 +1,869 @@
+/* ===== VARIABLES ===== */
+:root {
+  --primary-pink: #ffb6c1;
+  --light-pink: #ffe4e9;
+  --dark-pink: #ff69b4;
+  --dark-gray: #2c3e50;
+  --medium-gray: #34495e;
+  --light-gray: #ecf0f1;
+  --white: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-hover: rgba(0, 0, 0, 0.2);
+  --border-radius: 12px;
+}
+
+/* ===== GENERAL STYLES ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(
+    135deg,
+    var(--light-pink) 0%,
+    var(--light-gray) 100%
+  );
+  min-height: 100vh;
+  padding: 20px;
+  color: var(--dark-gray);
+}
+
+h1 {
+  color: var(--dark-gray);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+h2.title {
+  color: var(--dark-gray);
+  margin: 30px 0 20px 0;
+  font-size: 1.8rem;
+}
+
+/* ===== BUTTONS ===== */
+button,
+.btn {
+  background: var(--primary-pink);
+  color: var(--dark-gray);
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px var(--shadow);
+}
+
+button:hover,
+.btn:hover {
+  background: var(--dark-pink);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--shadow-hover);
+}
+
+.btn-primary {
+  background: var(--dark-gray);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--medium-gray);
+}
+
+#addSpent,
+#addEvent {
+  display: block;
+  margin: 20px auto;
+}
+
+/* ===== CARDS (EVENT & SPENT) ===== */
+#eventList,
+#spentList {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.event-card {
+  display: flex;
+  flex-direction: row;
+}
+.event-card,
+.spent-card {
+  display: flex;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px var(--shadow);
+  transition: all 0.3s ease;
+  border-left: 5px solid var(--primary-pink);
+}
+
+.event-card:hover,
+.spent-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px var(--shadow-hover);
+  border-left-color: var(--dark-pink);
+}
+
+.event-card h3,
+.spent-card h3 {
+  color: var(--dark-gray);
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.event-card p,
+.spent-card p {
+  color: var(--medium-gray);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.spent-card .spent-amount {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--dark-pink);
+  margin: 15px 0;
+}
+
+.spent-card .spent-author {
+  font-size: 0.9rem;
+  color: var(--medium-gray);
+  font-style: italic;
+}
+
+.no-spents,
+.no-events {
+  text-align: center;
+  color: var(--medium-gray);
+  font-size: 1.2rem;
+  padding: 40px;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  margin: 20px auto;
+  max-width: 600px;
+}
+/* ===== EVENT CARD AVEC FLÈCHE AU BOUT ===== */
+.event-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px var(--shadow);
+  transition: all 0.3s ease;
+  border-left: 5px solid var(--primary-pink);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px var(--shadow-hover);
+  border-left-color: var(--dark-pink);
+}
+
+/* Conteneur du contenu de la card */
+.event-card-content {
+  flex: 1;
+  min-width: 0; /* Pour permettre le text-overflow */
+}
+
+.event-card h3 {
+  color: var(--dark-gray);
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  word-wrap: break-word;
+}
+
+.event-card p {
+  color: var(--medium-gray);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+/* Flèche au bout de la card */
+.event-card-arrow {
+  font-size: 2rem;
+  color: var(--primary-pink);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  font-weight: bold;
+}
+
+.event-card:hover .event-card-arrow {
+  color: var(--dark-pink);
+  transform: translateX(10px);
+}
+
+/* Alternative avec ::after si vous ne voulez pas modifier le HTML */
+.event-card::after {
+  content: "→";
+  font-size: 2rem;
+  color: var(--primary-pink);
+  transition: all 0.3s ease;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.event-card:hover::after {
+  color: var(--dark-pink);
+  transform: translateX(8px);
+}
+
+/* ===== MODAL / POP-UP ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(44, 62, 80, 0.7);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background: var(--white);
+  margin: 5% auto;
+  padding: 0;
+  border-radius: var(--border-radius);
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px var(--shadow-hover);
+  animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.headerCard {
+  background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+  color: var(--white);
+  padding: 20px 25px;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerCard h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--white);
+}
+
+.close {
+  color: var(--white);
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.close:hover,
+.close:focus {
+  color: var(--dark-gray);
+  transform: rotate(90deg);
+}
+
+/* ===== FORM STYLES ===== */
+form {
+  padding: 30px 25px;
+}
+
+.formGroup,
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--dark-gray);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid var(--light-gray);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--dark-gray);
+  transition: all 0.3s ease;
+  background: var(--white);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-pink);
+  box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.2);
+}
+
+input::placeholder {
+  color: #95a5a6;
+}
+
+/* ===== ERROR & SUCCESS MESSAGES ===== */
+.error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: block;
+}
+
+.alert {
+  padding: 15px 20px;
+  border-radius: var(--border-radius);
+  margin: 20px auto;
+  max-width: 600px;
+  font-weight: 500;
+}
+
+.alert-success,
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  border-left: 5px solid #28a745;
+}
+
+.alert-error,
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  border-left: 5px solid #dc3545;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .modalContent {
+    width: 95%;
+    margin: 10% auto;
+  }
+
+  .headerCard h2 {
+    font-size: 1.2rem;
+  }
+
+  form {
+    padding: 20px 15px;
+  }
+
+  .event-card,
+  .spent-card {
+    padding: 15px;
+  }
+}
+
+/* ===== GRID LAYOUT FOR CARDS (OPTIONAL) ===== */
+@media (min-width: 768px) {
+  #eventList,
+  #spentList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+  }
+
+  .title {
+    grid-column: 1 / -1;
+  }
+
+  .no-spents,
+  .no-events {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+.event-card,
+.spent-card {
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-pink);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-pink);
+}
+
+/* ===== SPENT DEFAULT - PAGE DÉTAIL DÉPENSE ===== */
+
+/* Container global */
+body {
+  background: linear-gradient(
+    135deg,
+    var(--light-pink) 0%,
+    var(--light-gray) 100%
+  );
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* En-tête principal */
+.spent-default-header {
+  background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+  border-radius: var(--border-radius);
+  padding: 40px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 20px var(--shadow-hover);
+  text-align: center;
+  color: var(--white);
+}
+
+/* Titre de la dépense */
+h2.title {
+  color: var(--dark-gray);
+  font-size: 2.5rem;
+  margin: 0 0 15px 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.spent-default-header h2.title {
+  color: var(--white);
+}
+
+/* Date */
+p.date {
+  font-size: 1rem;
+  color: var(--medium-gray);
+  text-align: center;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+p.date::before {
+  content: "📅";
+  font-size: 1.2rem;
+}
+
+.spent-default-header p.date {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Montant principal */
+h3.montant {
+  background: var(--white);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--dark-pink);
+  margin: 30px auto;
+  max-width: 500px;
+  box-shadow: 0 6px 15px var(--shadow);
+  font-weight: bold;
+  border-left: 6px solid var(--primary-pink);
+  transition: all 0.3s ease;
+}
+
+h3.montant:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px var(--shadow-hover);
+}
+
+/* Texte "Payé par" */
+.spent-default-header + p,
+p:has(+ h3.title) {
+  background: var(--white);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--dark-gray);
+  margin: 20px auto;
+  max-width: 500px;
+  box-shadow: 0 4px 10px var(--shadow);
+  font-weight: 600;
+}
+
+p:has(+ h3.title)::before {
+  content: "👤 ";
+  margin-right: 8px;
+}
+
+/* Section Participants */
+h3.title:not(.montant) {
+  color: var(--dark-gray);
+  font-size: 1.8rem;
+  margin: 40px 0 25px 0;
+  text-align: center;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+h3.title:not(.montant)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: var(--primary-pink);
+  border-radius: 2px;
+}
+
+/* Container des participants */
+.participant {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Card participant */
+.card-participant {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: all 0.3s ease;
+  border-left: 5px solid var(--primary-pink);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card-participant:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px var(--shadow-hover);
+  border-left-color: var(--dark-pink);
+}
+
+/* Nom du participant */
+.card-participant p:first-child {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--dark-gray);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-participant p:first-child::before {
+  content: "";
+  width: 40px;
+  height: 40px;
+  background: var(--primary-pink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+/* Montant par personne */
+.card-participant p:last-child {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--dark-pink);
+  margin: 0;
+  text-align: right;
+  padding: 15px;
+  background: var(--light-pink);
+  border-radius: 8px;
+}
+
+/* Badge montant */
+.card-participant p:last-child::before {
+  content: "€ ";
+  font-size: 1.4rem;
+  opacity: 0.8;
+}
+
+/* Bouton retour */
+.btn-back-spent {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--dark-gray);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  margin: 30px auto;
+  display: block;
+  width: fit-content;
+  transition: all 0.3s ease;
+}
+
+.btn-back-spent:hover {
+  background: var(--medium-gray);
+  transform: translateX(-5px);
+}
+
+.btn-back-spent::before {
+  content: "← ";
+  font-size: 1.2rem;
+}
+
+/* Card vide si pas de participants */
+.no-participants {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 10px var(--shadow);
+  color: var(--medium-gray);
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.no-participants::before {
+  content: "👥";
+  display: block;
+  font-size: 4rem;
+  margin-bottom: 15px;
+  opacity: 0.3;
+}
+
+/* Animations */
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2.title {
+  animation: slideInFromTop 0.6s ease;
+}
+
+p.date {
+  animation: slideInFromTop 0.7s ease;
+}
+
+h3.montant {
+  animation: fadeInUp 0.8s ease;
+}
+
+.card-participant {
+  animation: fadeInUp 0.6s ease;
+  animation-fill-mode: both;
+}
+
+.card-participant:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.card-participant:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.card-participant:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.card-participant:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.card-participant:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h2.title {
+    font-size: 2rem;
+  }
+
+  h3.montant {
+    font-size: 2rem;
+    padding: 20px;
+  }
+
+  .participant {
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+  }
+
+  .card-participant {
+    padding: 20px;
+  }
+
+  .card-participant p:first-child {
+    font-size: 1.2rem;
+  }
+
+  .card-participant p:last-child {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .spent-default-header {
+    padding: 25px 15px;
+  }
+
+  h2.title {
+    font-size: 1.6rem;
+  }
+
+  h3.montant {
+    font-size: 1.8rem;
+    padding: 15px;
+    margin: 20px 10px;
+  }
+
+  h3.title:not(.montant) {
+    font-size: 1.5rem;
+  }
+}
+
+/* Style alternatif avec avatar initial */
+.card-participant.with-avatar p:first-child::before {
+  content: attr(data-initial);
+  background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+/* Effet de brillance sur le montant */
+h3.montant::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+h3.montant:hover::after {
+  left: 100%;
+}
+
+h3.montant {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Badge de répartition équitable */
+.equal-split-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--dark-gray);
+  color: var(--white);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 20px auto;
+  width: fit-content;
+}
+
+.equal-split-badge::before {
+  content: "⚖️";
+}
+
+/* Séparateur décoratif */
+.section-divider {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary-pink),
+    transparent
+  );
+  margin: 40px auto;
+  max-width: 200px;
+}

@@ -9,7 +9,7 @@ class Spent extends Database
 {
     private $idSpent;
     private $name;
-    private $picture;
+
     private $date;
     private $totalSpent;
     private $status;
@@ -30,16 +30,6 @@ class Spent extends Database
         $this->name = htmlspecialchars($value);
     }
 
-    public function getPicture()
-    {
-        return $this->picture;
-    }
-
-    public function setPicture($value)
-    {
-
-        $this->picture = $value;
-    }
 
     public function getDate()
     {
@@ -90,7 +80,7 @@ class Spent extends Database
         $this->totalSpent = 2;
     }
 
-
+    /**recupere le nom de l'auteur */
     public function getById($nbrUser)
     {
         $sql = "SELECT `user`.`name` FROM `user` INNER JOIN `spent` ON `user`.`id` = `spent`.`id_auteur` WHERE `spent`.`id_auteur` = :id";
@@ -110,6 +100,16 @@ class Spent extends Database
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+    public function getBySpentId($value)
+    {
+        $sql = "SELECT * FROM `spent` WHERE `id` = :id ORDER BY `date` DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":id", $value, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     /**creation d'une nouvelle depense */
     public function createSpent($value)
     {

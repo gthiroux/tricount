@@ -11,6 +11,7 @@ class Event extends Database
     private $nameEvent;
     private $idAdmin;
 
+    /**getter & setter */
     public function getNameEvent()
     {
         return $this->nameEvent;
@@ -23,26 +24,32 @@ class Event extends Database
 
         $this->nameEvent = htmlspecialchars($value);
     }
-    public function getById($value)
+
+
+    // public function info($value)
+    // {
+    //     $sql = "SELECT * FROM `spent` INNER JOIN `event` ON `spent`.`id_event` = `event`.`id` WHERE `event`.`id` = :id";
+    //     $stmt = $this->db->prepare($sql);
+    //     $stmt->bindValue(":id", $value, \PDO::PARAM_INT);
+    //     $stmt->execute();
+    //     $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    //     return $result ?: null;
+    // }
+
+    /**creation d'un nouveau evenement */
+    public function createEvent($value)
     {
-        $sql = "SELECT * FROM `event`  WHERE `id` = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":id", $value, \PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return $result ?: null;
+        $queryExecute = $this->db->prepare("INSERT INTO `event` (`name_event`,`id_admin`)
+
+    		VALUES (:nameEvent,:id_admin)");
+
+        $queryExecute->bindValue(':nameEvent', $this->nameEvent, PDO::PARAM_STR);
+        $queryExecute->bindValue(':id_admin', $value, PDO::PARAM_INT);
+
+        return $queryExecute->execute();
     }
 
-    public function info($value)
-    {
-        $sql = "SELECT * FROM `spent` INNER JOIN `event` ON `spent`.`id_event` = `event`.`id` WHERE `event`.`id` = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":id", $value, \PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return $result ?: null;
-    }
-
+    /** Recuperation de les evenements */
     public function getAllEvent()
     {
         $sql = "SELECT * FROM `event`";

@@ -4,8 +4,7 @@
 $error = [];
 $event = new Models\Event();
 $events = $event->getAllEvent();
-$info = $event->info(1);
-var_dump($info);
+
 
 // if (!empty($_POST)) {
 
@@ -39,5 +38,4 @@ var_dump($info);
 render('index', false, [
 	'error' => $error,
 	'events' => $events,
-	'info' => $info
 ]);
