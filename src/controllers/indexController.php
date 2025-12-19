@@ -1,41 +1,42 @@
 <?php
+session_start();
 
-
+// Vérifier si l'utilisateur a déjà créé son compte
+if (isset($_SESSION['user_registered']) && $_SESSION['user_registered'] === true) {
+    // Rediriger vers la page d'accueil si le compte existe déjà
+    redirectTo('/');
+    exit;
+}
 $error = [];
-$event = new Models\Event();
-$events = $event->getAllEvent();
+
+$admin = new Models\User();
+/** formulaire de création d'un user */
+if (isset($_POST["register"])) {
 
 
-// if (!empty($_POST)) {
+    try {
+        $admin->setUsername($_POST['name']);
+    } catch (\Exception $e) {
+        $error['name'] = $e->getMessage();
+    }
+    try {
+        $admin->setEmail($_POST['email']);
+    } catch (\Exception $e) {
+        $error['emailUser'] = $e->getMessage();
+    }
 
-// $user = new Models\User();
 
-// try {
-// 	$user->setUsername($_POST['name']);
-// } catch (\Exception $e) {
-// 	$error['name'] = $e->getMessage();
-// }
-// try {
-// 	$user->setEmail($_POST['email']);
-// } catch (\Exception $e) {
-// 	$error['email'] = $e->getMessage();
-// }
-// try {
-// 	$user->setPassword($_POST['password']);
-// } catch (\Exception $e) {
-// 	$error['password'] = $e->getMessage();
-// }
-
-// if (empty($error)) {
-// 	if ($user->register()) {
-// 		redirectTo('/');
-// 	} else {
-// 		$error['global'] = 'Echec de l\'enregistrement';
-// 	}
-// }
-// }
+    if (empty($error)) {
+        if ($admin->register()) {
+            redirectTo('/home');
+            exit;
+        } else {
+            $error['global'] = 'Echec de l\'enregistrement';
+        }
+    }
+}
 
 render('index', false, [
-	'error' => $error,
-	'events' => $events,
+    'error' => $error,
+    'admin' => $admin,
 ]);

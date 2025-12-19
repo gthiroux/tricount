@@ -5,11 +5,18 @@
 	<?php foreach ($spents as $spent): ?>
 		<?php component("spent-default", [
 			"spent" => $spent,
-			"nameAutor" => $nameAutor,
+			"admin" => $admin,
+			'montantParPersonne' => $montantParPersonne,
+			'usersList' => $usersList,
 		]); ?>
 
 	<?php endforeach; ?>
 <?php endif; ?>
+<form class="deleteModif" method="POST">
+	<button name="deleteSpent"> Supprimer</button>
+	<button id="modifSpent"> Modifier</button>
+</form>
+
 
 <?php
 render('default', true, [

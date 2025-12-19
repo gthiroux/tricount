@@ -9,6 +9,7 @@ class Event extends Database
 {
     private $idEvent;
     private $nameEvent;
+    private $email;
     private $idAdmin;
 
     /**getter & setter */
@@ -25,6 +26,24 @@ class Event extends Database
         $this->nameEvent = htmlspecialchars($value);
     }
 
+    public function getEmail(){
+        return $this->email;
+    }
+
+    public function setEmail($value){
+        if(empty($value)) throw new Exception('Email is required');
+        if(filter_var($value,FILTER_VALIDATE_EMAIL)) throw new Exception('Email is not valid');
+    }
+
+// $value = $post['emailUser']
+    public function getId($value){
+        $sql = "SELECT * FROM `user` WHERE `email` = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":email", $value, \PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result ?: null;
+    }
 
     // public function info($value)
     // {
@@ -54,6 +73,37 @@ class Event extends Database
     {
         $sql = "SELECT * FROM `event`";
         $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // supprimer une event
+    public function delete(int $idSpent): bool
+    {
+        $sql = "DELETE FROM `event` WHERE `id` = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":id", $idSpent, \PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    // modifie une event
+    public function update(int $idEvent): bool
+    {
+        $sql =
+            "UPDATE `event` SET `name_event` = :name WHERE `id` = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":id", $idEvent, \PDO::PARAM_INT);
+        $stmt->bindValue(":title", $this->nameEvent, \PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
+    public function getByEventId($value)
+    {
+        $sql = "SELECT * FROM `event` WHERE `id` = :id ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":id", $value, \PDO::PARAM_INT);
+        $stmt->execute();
+
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

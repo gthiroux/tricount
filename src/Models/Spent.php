@@ -49,7 +49,7 @@ class Spent extends Database
     public function setTotalSpent($value)
     {
         if (empty($value) || $value == 0) throw new Exception('Spent is required');
-        if (!preg_match('/^\d+([.,]\d+)?$/', $value)) throw new Exception('Invalid email address');
+        if (!preg_match('/^\d+([.,]\d+)?$/', $value)) throw new Exception('Spent is only number or float');
 
         $this->totalSpent = htmlspecialchars($value);
     }
@@ -79,17 +79,35 @@ class Spent extends Database
 
         $this->totalSpent = 2;
     }
+    /**
+     * Récupère l'ID de l'événement associé à la dépense
+     * @return int
+     */
+    public function getEventId()
+    {
+        return $this->idEvent;
+    }
+
+    /**
+     * Définit l'ID de l'événement
+     * @param int $eventId
+     */
+    public function setEventId($value)
+    {
+        $this->idEvent = $value;
+    }
 
     /**recupere le nom de l'auteur */
-    public function getById($nbrUser)
+    public function getById($value)
     {
-        $sql = "SELECT `user`.`name` FROM `user` INNER JOIN `spent` ON `user`.`id` = `spent`.`id_auteur` WHERE `spent`.`id_auteur` = :id";
+        $sql = "SELECT * FROM `user` INNER JOIN `spent` ON `user`.`id` = `spent`.`id_auteur` WHERE `spent`.`id_auteur` = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":id", $nbrUser, \PDO::PARAM_INT);
+        $stmt->bindValue(":id", $value, \PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result ?: null;
     }
+
     /** Récupère l'id de l'evenement et filtre les depenses qui ont l'id_event */
     public function getByEventId($value)
     {
@@ -113,22 +131,61 @@ class Spent extends Database
     /**creation d'une nouvelle depense */
     public function createSpent($value)
     {
+        $this->setEventId($value);
         $queryExecute = $this->db->prepare("INSERT INTO `spent` (`name_spent`,`spent`,`id_auteur`,`id_event`)
 
     		VALUES (:name,:spent,1,:id_event)");
 
         $queryExecute->bindValue(':name', $this->name, PDO::PARAM_STR);
         $queryExecute->bindValue(':spent', $this->totalSpent, PDO::PARAM_STR);
-        $queryExecute->bindValue(':id_event', $value, PDO::PARAM_INT);
+        $queryExecute->bindValue(':id_event', $this->idEvent, PDO::PARAM_INT);
 
         return $queryExecute->execute();
     }
 
+    // supprimer une depense
+    public function delete(int $idSpent): bool
+    {
+        $sql = "DELETE FROM `spent` WHERE `id` = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":id", $idSpent, \PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    // modifie une depense
+    public function update(int $idSpent): bool
+    {
+        $sql =
+            "UPDATE `spent` SET `name_spent` = :name, `spent` = :spent WHERE `id` = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":id", $idSpent, \PDO::PARAM_INT);
+        $stmt->bindValue(":title", $this->name, \PDO::PARAM_STR);
+        $stmt->bindValue(":description", $this->idSpent, \PDO::PARAM_STR);
+        return $stmt->execute();
+    }
 
     // public function getAllSpent(): array
     // {
     //     $sql = "SELECT * FROM `spent` ORDER BY `date` DESC";
     //     $stmt = $this->db->query($sql);
+    //     return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    // }
+    public function getAdmin($value)
+    {
+        $sql = "SELECT * FROM `user` WHERE `id` = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":id", $value, \PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result ?: null;
+    }
+    // public function getAdmin($value)
+    // {
+    //     $sql = "SELECT * FROM `user` WHERE `id_event` = :id_event ORDER BY `date` DESC";
+    //     $stmt = $this->db->prepare($sql);
+    //     $stmt->bindValue(":id_event", $value, \PDO::PARAM_INT);
+    //     $stmt->execute();
+
     //     return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     // }
 }

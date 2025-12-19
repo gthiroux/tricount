@@ -12,6 +12,19 @@
 </head>
 
 <body>
+	<nav class="navbar">
+		<div class="nav-logo">
+			<a href="/home">
+				<h1>CoinCoin</h1>
+			</a>
+		</div>
+		<div class="nav-profile">
+			<!-- ajout d'une page profil à venir -->
+			<a href="#" id="profileIcon" class="profile-link">
+				<span class="profile-icon">&#x1F464;</span>
+			</a>
+		</div>
+	</nav>
 	<main>
 		<?= $content ?>
 	</main>

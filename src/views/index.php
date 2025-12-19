@@ -1,66 +1,53 @@
-<?php ob_start();
+<?php ob_start(); ?>
 
-session_start();
+<div class="register-container">
+    <div class="register-card">
+        <h1>Connexion à votre compte</h1>
+        <p class="subtitle">Bienvenue ! Créez votre compte pour commencer.</p>
 
-?>
+        <form method="POST" action="" name="registerForm">
+            <div class="formGroup">
+                <label for="name">Nom d'utilisateur</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Entrez votre nom"
+                    required>
+                <?php if (!empty($error["name"])): ?>
+                    <span class="error"><?= htmlspecialchars($error["name"]) ?></span>
+                <?php endif; ?>
+            </div>
 
-<h1>Events</h1>
-<button id="addEvent"> Créer un nouveau évènement</button>
-<!-- Formulaire d'ajout -->
-<div id="popupFormEvent" class="formCard modal">
-	<!-- Contenu de la pop up -->
-	<div class="modalContent">
-		<div class="headerCard">
-			<h2>Ajouter un évènement </h2>
-			<span class="close">&times;</span>
-		</div>
-		<form method="POST" action="" name="addEventForm">
-			<div class="formGroup">
-				<label for="nameEvent">Nom de la dépense : </label>
-				<input
-					type="text"
-					id="nameEvent"
-					name="nameEvent"
-					placeholder="Entrez le titre de l'évènement">
-				<?php if (!empty($error["nameEvent"])): ?>
-					<span class="error"><?= htmlspecialchars($error["nameEvent"]) ?></span>
-				<?php endif; ?>
-			</div>
+            <div class="formGroup">
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="votre@email.com"
+                    required>
+                <?php if (!empty($error["email"])): ?>
+                    <span class="error"><?= htmlspecialchars($error["email"]) ?></span>
+                <?php endif; ?>
+            </div>
 
-			<div class="form-group">
-				<label for="participant">Nombre de participant </label>
-				<input id="participant" name="participant" type="number" placeholder="Entrez un montant"></input>
-				<?php if (!empty($error["totalSpent"])): ?>
-					<span class="error"><?= htmlspecialchars($error["totalSpent"]) ?></span>
-				<?php endif; ?>
-			</div>
+            <?php if (!empty($error["global"])): ?>
+                <div class="error global-error">
+                    <?= htmlspecialchars($error["global"]) ?>
+                </div>
+            <?php endif; ?>
 
-			<button type="submit" name="addEvent" class="btn btn-primary">Ajouter la dépense</button>
-		</form>
-	</div>
+            <button type="submit" name="register" class="btn btn-primary btn-full">
+                Créer mon compte
+            </button>
+        </form>
+    </div>
 </div>
-
-<div id="eventList">
-	<h2 class="title">
-		Mes Evènements
-	</h2>
-	<?php if (empty($events)): ?>
-		<p class="no-events">Aucune depense pour le moment. Ajoutez-en une !</p>
-	<?php else: ?>
-		<?php foreach ($events as $event): ?>
-			<?php component("event-card", [
-				"event" => $event
-			]); ?>
-
-		<?php endforeach; ?>
-	<?php endif; ?>
-</div>
-
 <?php
 render('default', true, [
-	'title' => 'Acceuil',
-	'css' => 'global',
-	'js' => 'formEvent',
-	'content' => ob_get_clean(),
+    'title' => 'Connexion',
+    'css' => 'global',
+    'content' => ob_get_clean(),
 ]);
 ?>

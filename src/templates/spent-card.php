@@ -4,9 +4,9 @@
             <h3 class="spent">
                 <?= htmlspecialchars($spent['name_spent']) ?>
             </h3>
-            <p>Paye par <?= $nameAutor['name'] ?></p>
+            <p>Payé par <?= $admin['name'] ?></p>
             <p class="spent"> <?= htmlspecialchars($spent['spent']) ?> €</p>
-    
+
         </div>
     </div>
 </a>

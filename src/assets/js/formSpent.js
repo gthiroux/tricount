@@ -1,4 +1,3 @@
-
 // Formulaire des dépenses
 // recuperation de la pop up
 var modalSpent = document.getElementById("popupFormSpent");
@@ -23,5 +22,32 @@ spanSpent.addEventListener("click", function () {
 window.onclick = function (event) {
   if (event.target == modalSpent) {
     modalSpent.style.display = "none";
+  }
+};
+
+// Formulaire des Users
+// recuperation de la pop up
+var modalUser = document.getElementById("popupFormUser");
+
+// recuperation du bouton
+var btnUser = document.getElementById("addUser");
+
+// Get the <span> element that closes the modal
+var spanUser = document.getElementsByClassName("close")[0];
+
+// ouverture de la pop up apres un clck sur le bouton
+btnUser.onclick = function () {
+  modalUser.style.display = "block";
+};
+
+// fermeture de la pop up apres click sur la croix
+spanUser.addEventListener("click", function () {
+  modalUser.style.display = "none";
+});
+
+// fermeture de la pop up apres click en dehors de la pop-up
+window.onclick = function (event) {
+  if (event.target == modalUser) {
+    modalUser.style.display = "none";
   }
 };

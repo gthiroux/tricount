@@ -8,7 +8,7 @@ use PDO;
 class User extends Database
 {
 	private $id;
-	private $name;
+	protected $name;
 	private $email;
 	// private $password;
 
@@ -59,8 +59,14 @@ class User extends Database
 
 		$queryExecute->bindValue(':name', $this->name, PDO::PARAM_STR);
 		$queryExecute->bindValue(':email', $this->email, PDO::PARAM_STR);
-		// $queryExecute->bindValue(':password', $this->password, PDO::PARAM_STR);
 
 		return $queryExecute->execute();
+	}
+
+	public function getAllUser()
+	{
+		$sql = $this->db->prepare("SELECT * FROM `user` ");
+		$stmt = $this->db->query($sql);
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 }
